@@ -1,0 +1,333 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Our Story — Premium Couple</title>
+<meta name="theme-color" content="#0d0b0c">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+
+<style>
+:root{
+  --bg:#210f18;
+  --bg2:#351522;
+  --paper:#fff5f7;
+  --muted:#cdb2ba;
+  --gold:#d89aaa;
+  --gold2:#f6ccd6;
+  --line:rgba(246,204,214,.22);
+  --white:#fff8fa;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
+  background:var(--bg);color:var(--paper);font-family:"DM Sans",sans-serif;
+  font-weight:300;overflow-x:hidden;line-height:1.6;
+}
+body.locked{overflow:hidden}
+a{color:inherit;text-decoration:none}
+button{font:inherit}
+::selection{background:var(--gold);color:#171113}
+
+.noise{
+  position:fixed;inset:0;pointer-events:none;z-index:50;opacity:.055;
+  background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 180 180' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.7'/%3E%3C/svg%3E");
+}
+.cursor{position:fixed;width:14px;height:14px;border:1px solid var(--gold2);border-radius:50%;pointer-events:none;z-index:100;transform:translate(-50%,-50%);transition:transform .15s ease,opacity .2s;mix-blend-mode:difference}
+@media(max-width:800px){.cursor{display:none}}
+
+.music{
+  position:fixed;right:22px;top:22px;z-index:60;width:48px;height:48px;border:1px solid var(--line);
+  border-radius:50%;background:rgba(13,11,12,.65);backdrop-filter:blur(14px);color:var(--gold2);cursor:pointer
+}
+.music span{display:block;width:15px;height:15px;border:1px solid currentColor;border-radius:50%;margin:auto}
+.music.playing span{animation:spin 2.5s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+
+.intro-screen{
+  position:fixed;inset:0;z-index:80;background:#210f18;display:grid;place-items:center;
+  transition:opacity .8s ease,visibility .8s;
+}
+.intro-screen.hide{opacity:0;visibility:hidden}
+.intro-inner{text-align:center;padding:30px}
+.eyebrow{font-size:10px;letter-spacing:5px;text-transform:uppercase;color:var(--gold);margin-bottom:18px}
+.intro-inner h1{font-family:"Cormorant Garamond",serif;font-size:clamp(60px,12vw,130px);font-weight:400;line-height:.82}
+.intro-inner p{color:var(--muted);margin:25px auto;max-width:420px}
+.enter{
+  border:1px solid var(--gold);background:transparent;color:var(--paper);padding:14px 28px;
+  border-radius:100px;cursor:pointer;letter-spacing:3px;font-size:10px;text-transform:uppercase;transition:.3s
+}
+.enter:hover{background:var(--gold);color:#151012}
+
+.hero{
+  min-height:100svh;position:relative;display:grid;place-items:center;text-align:center;overflow:hidden;
+  background:
+    radial-gradient(circle at 50% 35%,rgba(199,165,122,.18),transparent 30%),
+    linear-gradient(180deg,#100c0e,#0d0b0c);
+}
+.hero::before,.hero::after{content:"";position:absolute;border:1px solid var(--line);border-radius:50%;pointer-events:none}
+.hero::before{width:min(70vw,650px);height:min(70vw,650px);animation:float 8s ease-in-out infinite}
+.hero::after{width:min(90vw,900px);height:min(90vw,900px);opacity:.35}
+@keyframes float{50%{transform:translateY(-12px) scale(1.02)}}
+.hero-content{position:relative;z-index:2;padding:30px}
+.hero h1{font-family:"Cormorant Garamond",serif;font-weight:400;font-size:clamp(80px,17vw,190px);line-height:.7;letter-spacing:-5px}
+.hero h1 em{font-size:.42em;color:var(--gold);display:block;letter-spacing:0;font-style:normal;margin:20px 0}
+.hero-date{margin-top:34px;font-size:10px;letter-spacing:5px;color:var(--muted)}
+.scroll{margin-top:60px;color:var(--muted);font-size:9px;letter-spacing:4px}
+.scroll i{display:block;width:1px;height:55px;background:linear-gradient(var(--gold),transparent);margin:12px auto}
+
+section{position:relative}
+.wrap{max-width:1100px;margin:auto;padding:130px 25px}
+.center{text-align:center}
+.kicker{font-size:10px;letter-spacing:5px;text-transform:uppercase;color:var(--gold);margin-bottom:18px}
+.title{font-family:"Cormorant Garamond",serif;font-size:clamp(52px,8vw,105px);font-weight:400;line-height:.88}
+.lead{max-width:620px;margin:28px auto 0;color:var(--muted);font-size:14px;line-height:2}
+
+.reveal{opacity:0;transform:translateY(35px);transition:opacity 1s ease,transform 1s ease}
+.reveal.visible{opacity:1;transform:none}
+
+.story{background:var(--paper);color:#211b19}
+.story .kicker{color:#9d7950}
+.story .lead{color:#776a61}
+.timeline{margin-top:80px;position:relative}
+.timeline:before{content:"";position:absolute;top:0;bottom:0;right:50%;width:1px;background:rgba(80,60,45,.18)}
+.event{width:50%;padding:0 55px 75px;position:relative}
+.event:nth-child(even){margin-right:50%}
+.event:nth-child(odd){text-align:left}
+.event-dot{position:absolute;top:8px;right:-5px;width:10px;height:10px;border-radius:50%;background:var(--paper);border:1px solid #a98a68}
+.event:nth-child(even) .event-dot{right:auto;left:-5px}
+.event .date{font-size:9px;letter-spacing:3px;color:#9d7950}
+.event h3{font-family:"Cormorant Garamond",serif;font-size:38px;font-weight:400;margin:6px 0}
+.event p{font-size:12px;color:#776a61;max-width:360px}
+
+.gallery{background:#100d0e}
+.grid{margin-top:60px;display:grid;grid-template-columns:repeat(12,1fr);gap:14px}
+.card{overflow:hidden;background:#181315;position:relative}
+.card:nth-child(1){grid-column:span 7}
+.card:nth-child(2){grid-column:span 5;margin-top:60px}
+.card:nth-child(3){grid-column:span 5}
+.card:nth-child(4){grid-column:span 7;margin-top:-40px}
+.card img{width:100%;height:520px;object-fit:cover;display:block;filter:saturate(.88);transition:transform .8s ease,filter .8s}
+.card:nth-child(2) img,.card:nth-child(3) img{height:400px}
+.card:hover img{transform:scale(1.045);filter:saturate(1)}
+.card figcaption{position:absolute;bottom:0;left:0;right:0;padding:25px;color:#fff;background:linear-gradient(transparent,rgba(0,0,0,.7));font-family:"Cormorant Garamond";font-size:25px}
+
+.counter{background:linear-gradient(135deg,#351522,#210f18);text-align:center}
+.counter-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;max-width:800px;margin:55px auto 0}
+.time{border:1px solid var(--line);padding:28px 10px;background:rgba(255,255,255,.015)}
+.time b{display:block;font-family:"Cormorant Garamond";font-size:58px;font-weight:400;color:var(--gold2);line-height:1}
+.time span{font-size:9px;letter-spacing:3px;color:var(--muted);text-transform:uppercase}
+
+.video{background:#f2ebe4;color:#211b19}
+.video .kicker{color:#9d7950}
+.video-box{margin-top:55px;position:relative;overflow:hidden;background:#d7cec4;box-shadow:0 30px 80px rgba(30,20,15,.18)}
+.video-box video{width:100%;display:block;max-height:720px;object-fit:cover}
+
+.letter{background:#e9dfd5;color:#211b19;text-align:center}
+.letter-box{max-width:750px;margin:50px auto 0;padding:60px 45px;border:1px solid rgba(80,60,45,.2);background:rgba(255,255,255,.18)}
+.letter-text{font-family:"Cormorant Garamond";font-size:clamp(30px,5vw,52px);line-height:1.15;font-style:italic}
+.signature{margin-top:30px;font-size:10px;letter-spacing:4px;color:#9d7950;text-transform:uppercase}
+
+.final{min-height:85svh;display:grid;place-items:center;text-align:center;background:#210f18;overflow:hidden}
+.final h2{font-family:"Cormorant Garamond";font-size:clamp(75px,14vw,180px);font-weight:400;line-height:.78}
+.final h2 span{color:var(--gold)}
+.final p{margin-top:30px;color:var(--muted);letter-spacing:4px;font-size:9px;text-transform:uppercase}
+
+footer{text-align:center;padding:60px 20px;border-top:1px solid var(--line);color:var(--muted);font-size:9px;letter-spacing:3px}
+
+@media(max-width:700px){
+  .wrap{padding:95px 20px}
+  .hero h1{letter-spacing:-2px}
+  .timeline:before{right:8px}
+  .event,.event:nth-child(even){width:100%;margin:0;padding:0 35px 55px 10px;text-align:right}
+  .event-dot,.event:nth-child(even) .event-dot{right:3px;left:auto}
+  .grid{display:grid;grid-template-columns:1fr}
+  .card,.card:nth-child(2),.card:nth-child(3),.card:nth-child(4){grid-column:1;margin:0}
+  .card img,.card:nth-child(2) img,.card:nth-child(3) img{height:430px}
+  .counter-grid{grid-template-columns:repeat(2,1fr)}
+  .letter-box{padding:45px 22px}
+}
+</style>
+</head>
+
+<body class="locked">
+<div class="noise"></div>
+<div class="cursor" id="cursor"></div>
+
+<div class="intro-screen" id="intro">
+  <div class="intro-inner">
+    <div class="eyebrow">A little world made for two</div>
+    <h1>Our<br>Story</h1>
+    <p>Some moments deserve more than a photo. They deserve a whole place to live.</p>
+    <button class="enter" id="enter">Enter our story</button>
+  </div>
+</div>
+
+<button class="music" id="music" aria-label="تشغيل الموسيقى"><span></span></button>
+<audio id="audio" loop>
+  <source src="song.mp3" type="audio/mpeg">
+</audio>
+
+<header class="hero">
+  <div class="hero-content reveal">
+    <div class="kicker">A story worth remembering</div>
+    <h1>Omar <em>&</em> Sara</h1>
+    <div class="hero-date">OUR STORY · 2026</div>
+    <div class="scroll">SCROLL TO DISCOVER<i></i></div>
+  </div>
+</header>
+
+<section class="wrap center reveal">
+  <div class="kicker">The beginning</div>
+  <h2 class="title">Two people.<br>One beautiful story.</h2>
+  <p class="lead">من أول لحظة لحد النهارده، كل تفصيلة صغيرة بقت جزء من حكايتنا. الموقع ده مجرد مكان نحفظ فيه أجمل اللحظات.</p>
+</section>
+
+<section class="story">
+  <div class="wrap">
+    <div class="center reveal">
+      <div class="kicker">Our journey</div>
+      <h2 class="title">From the first<br>hello to forever.</h2>
+    </div>
+
+    <div class="timeline">
+      <article class="event reveal">
+        <span class="event-dot"></span>
+        <div class="date">14 · 02 · 2024</div>
+        <h3>The first hello</h3>
+        <p>أول مرة اتقابلنا فيها، اللحظة اللي بدأت منها الحكاية.</p>
+      </article>
+      <article class="event reveal">
+        <span class="event-dot"></span>
+        <div class="date">20 · 03 · 2024</div>
+        <h3>The first memory</h3>
+        <p>أول خروجة، أول صورة، وأول ذكرى حسينا إنها مختلفة.</p>
+      </article>
+      <article class="event reveal">
+        <span class="event-dot"></span>
+        <div class="date">10 · 08 · 2025</div>
+        <h3>A thousand little moments</h3>
+        <p>ضحك، كلام، سفر، زعل وتصالح… تفاصيل صغيرة عملت حكاية كبيرة.</p>
+      </article>
+      <article class="event reveal">
+        <span class="event-dot"></span>
+        <div class="date">14 · 02 · 2026</div>
+        <h3>Still choosing you</h3>
+        <p>ومهما عدّى وقت، لسه كل مرة بنختار بعض من جديد.</p>
+      </article>
+    </div>
+  </div>
+</section>
+
+<section class="gallery">
+  <div class="wrap">
+    <div class="center reveal">
+      <div class="kicker">Memories</div>
+      <h2 class="title">Little moments.<br>Big feelings.</h2>
+    </div>
+    <div class="grid">
+      <figure class="card reveal"><img src="photo1.jpg" alt="Our memory"><figcaption>That smile.</figcaption></figure>
+      <figure class="card reveal"><img src="photo2.jpg" alt="Our memory"><figcaption>Just us.</figcaption></figure>
+      <figure class="card reveal"><img src="photo3.jpg" alt="Our memory"><figcaption>One of my favorites.</figcaption></figure>
+      <figure class="card reveal"><img src="photo4.jpg" alt="Our memory"><figcaption>Keep this moment.</figcaption></figure>
+    </div>
+  </div>
+</section>
+
+<section class="counter">
+  <div class="wrap center reveal">
+    <div class="kicker">Our time together</div>
+    <h2 class="title">Every second<br>counts.</h2>
+    <div class="counter-grid">
+      <div class="time"><b id="days">00</b><span>Days</span></div>
+      <div class="time"><b id="hours">00</b><span>Hours</span></div>
+      <div class="time"><b id="minutes">00</b><span>Minutes</span></div>
+      <div class="time"><b id="seconds">00</b><span>Seconds</span></div>
+    </div>
+  </div>
+</section>
+
+<section class="video">
+  <div class="wrap">
+    <div class="center reveal">
+      <div class="kicker">Our film</div>
+      <h2 class="title">Some memories<br>move.</h2>
+    </div>
+    <div class="video-box reveal">
+      <video controls playsinline poster="video-cover.jpg">
+        <source src="our-video.mp4" type="video/mp4">
+        Your browser does not support video.
+      </video>
+    </div>
+  </div>
+</section>
+
+<section class="letter">
+  <div class="wrap reveal">
+    <div class="kicker">A little note</div>
+    <div class="letter-box">
+      <div class="letter-text">“If I could keep one thing from every day, it would be the moments I spent with you.”</div>
+      <div class="signature">With all my heart · Omar</div>
+    </div>
+  </div>
+</section>
+
+<section class="final">
+  <div class="reveal">
+    <div class="kicker">And now...</div>
+    <h2>Our<br><span>story.</span></h2>
+    <p>One journey · countless memories · still us</p>
+  </div>
+</section>
+
+<footer>MADE WITH LOVE · OMAR & SARA · 2026</footer>
+
+<script>
+const intro=document.getElementById('intro');
+const enter=document.getElementById('enter');
+const audio=document.getElementById('audio');
+const music=document.getElementById('music');
+
+enter.addEventListener('click',()=>{
+  intro.classList.add('hide');
+  document.body.classList.remove('locked');
+  audio.play().then(()=>music.classList.add('playing')).catch(()=>{});
+});
+
+music.addEventListener('click',()=>{
+  if(audio.paused){audio.play();music.classList.add('playing')}
+  else{audio.pause();music.classList.remove('playing')}
+});
+
+const cursor=document.getElementById('cursor');
+window.addEventListener('mousemove',e=>{
+  cursor.style.left=e.clientX+'px';
+  cursor.style.top=e.clientY+'px';
+});
+
+const observer=new IntersectionObserver(entries=>{
+  entries.forEach(entry=>{
+    if(entry.isIntersecting) entry.target.classList.add('visible');
+  });
+},{threshold:.12});
+document.querySelectorAll('.reveal').forEach(el=>observer.observe(el));
+
+/* العد التصاعدي: احسبوا مدة علاقتكم من التاريخ ده */
+const startDate=new Date("2024-02-14T00:00:00");
+function countUp(){
+  const diff=Math.max(0,new Date()-startDate);
+  const d=Math.floor(diff/86400000);
+  const h=Math.floor(diff/3600000)%24;
+  const m=Math.floor(diff/60000)%60;
+  const s=Math.floor(diff/1000)%60;
+  document.getElementById('days').textContent=String(d).padStart(2,'0');
+  document.getElementById('hours').textContent=String(h).padStart(2,'0');
+  document.getElementById('minutes').textContent=String(m).padStart(2,'0');
+  document.getElementById('seconds').textContent=String(s).padStart(2,'0');
+}
+countUp();setInterval(countUp,1000);
+</script>
+</body>
+</html>
